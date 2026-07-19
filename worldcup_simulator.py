@@ -34,10 +34,11 @@ class Team:
         self.goals_against = 0
         self.points = 0
 
-    def simulate_match(self, opponent, is_knockout):
+    def simulate_match(self, opponent, is_knockout=False):
         """Simulate a match between this team and an opponent team"""
 
         pass
+
 
 class Match:
     """class to represent a match between two teams"""
@@ -57,6 +58,7 @@ class Match:
         """Simulate the match and determine the winner"""
 
         pass
+
 
 class Group:
     """class to represent a group containing 4 teams in the World Cup"""
@@ -82,6 +84,7 @@ class Group:
         
         pass
 
+
 class KnockoutStage:
     """class to represent the knockout stage of the World Cup"""
 
@@ -105,6 +108,7 @@ class KnockoutStage:
         """Display the results of the knockout stage matches"""
 
         pass
+
 
 class WorldCupSimulator:
     """class to represent the World Cup tournament"""
