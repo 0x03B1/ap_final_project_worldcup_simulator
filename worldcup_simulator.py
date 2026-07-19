@@ -81,3 +81,27 @@ class Group:
         """Return the top 2 teams in the group that advance to the knockout stage"""
         
         pass
+
+class KnockoutStage:
+    """class to represent the knockout stage of the World Cup"""
+
+    def __init__(self, round_name, matches):
+        """Initialize a KnockoutStage object with a list of Team objects"""
+
+        self.round_name = round_name
+        self.matches = matches
+
+    def play_round(self):
+        """Simulate a round of matches in the knockout stage and update team statistics"""
+
+        pass
+
+    def get_winners(self):
+        """Return the winners team of the knockout stage in the order they were played"""
+
+        pass
+
+    def display_results(self):
+        """Display the results of the knockout stage matches"""
+
+        pass
