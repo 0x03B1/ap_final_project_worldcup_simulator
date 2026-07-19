@@ -38,3 +38,22 @@ class Team:
         """Simulate a match between this team and an opponent team"""
 
         pass
+
+class Match:
+    """class to represent a match between two teams"""
+
+    def __init__(self, team1, team2, is_knockout):
+        """Initialize a Match object with two Team objects"""
+
+        self.team1 = team1
+        self.team2 = team2
+        self.is_knockout = is_knockout
+
+        self.goals1 = 0
+        self.goals2 = 0
+        self.winner = None
+
+    def play(self):
+        """Simulate the match and determine the winner"""
+
+        pass
