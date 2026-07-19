@@ -57,3 +57,27 @@ class Match:
         """Simulate the match and determine the winner"""
 
         pass
+
+class Group:
+    """class to represent a group containing 4 teams in the World Cup"""
+
+    def __init__(self, name, teams):
+        """Initialize a Group object with a name and a list of Team objects"""
+
+        self.name = name
+        self.teams = teams
+
+    def play_all_matches(self):
+        """Simulate all matches in the group and update team statistics"""
+
+        pass
+
+    def get_ranking(self):
+        """Return the teams in the group sorted by points, goal difference, goals for, and randomly if necessary"""
+
+        pass
+
+    def advance_teams(self):
+        """Return the top 2 teams in the group that advance to the knockout stage"""
+        
+        pass
