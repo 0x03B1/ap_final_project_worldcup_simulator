@@ -5,6 +5,7 @@
 import csv
 import random
 import math
+import numpy as np
 
 class Team:
     """class to represent a team in the World Cup"""
