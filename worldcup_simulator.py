@@ -105,3 +105,57 @@ class KnockoutStage:
         """Display the results of the knockout stage matches"""
 
         pass
+
+class WorldCupSimulator:
+    """class to represent the World Cup tournament"""
+
+    def __init__(self):
+        """Initialize a WorldCupSimulator object, the main class that will run the simulation"""
+        
+        self.teams = []
+        self.groups = []
+        self.round_of_16 = None
+        self.quarterfinals = None
+        self.semifinals = None
+        self.final = None
+        self.champion = None
+
+    def load_teams_from_csv(self, filename):
+        """Load teams from a CSV file and create Team objects"""
+
+        pass
+
+    def seed_and_draw_groups(self):
+        """Group draw based on seeding like fifa rankings"""
+
+        pass
+
+    def run_group_stage(self):
+        """Run the group stage of the World Cup and determine the teams that advance to the knockout stage"""
+
+        pass
+
+    def setup_knockout_bracket(self):
+        """Set up the knockout stage bracket based on the teams that advanced from the group stage"""
+
+        pass
+
+    def run_knockout_stage(self):
+        """Run the knockout stage of the World Cup and determine the champion"""
+
+        pass
+
+    def run_full_simulation(self):
+        """Run the full World Cup simulation, including group stage and knockout stage and determine the champion"""
+
+        pass
+
+    def most_likely_champion(self, num_simulations=1000):
+        """Run multiple simulations of the World Cup and determine the most likely champion"""
+
+        pass
+
+    def display_bracket(self):
+        """Display the knockout stage bracket and results"""
+
+        pass
