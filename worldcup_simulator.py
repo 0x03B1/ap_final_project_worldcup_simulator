@@ -3,8 +3,8 @@
 #404130573
 
 import csv
-import random
-import math
+import random as r
+import math as m
 import numpy as np
 
 class Team:
