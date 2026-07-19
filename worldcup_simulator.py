@@ -35,99 +35,99 @@ class Team:
         self.goals_against = 0
         self.points = 0
 
-def simulate_match(self, opponent, is_knockout=False):
-    """Simulate a match between this team and an opponent team.
+    def simulate_match(self, opponent, is_knockout=False):
+        """Simulate a match between this team and an opponent team.
 
-    Args:
-        opponent (Team): The opposing team.
-        is_knockout (bool): Whether the match is in knockout stage.
+        Args:
+            opponent (Team): The opposing team.
+            is_knockout (bool): Whether the match is in knockout stage.
 
-    Returns:
-        tuple: (goals_self, goals_opponent, winner)
-            winner is None in group stage if the match ends in a draw.
-    """
-    
-    # -------------------------
-    # 1) Regular 90 minutes
-    # -------------------------
-    lambda_self = (self.attack / 100) * 1.5 + (1 - opponent.defense / 100) * 0.8
-    lambda_opponent = (opponent.attack / 100) * 1.5 + (1 - self.defense / 100) * 0.8
+        Returns:
+            tuple: (goals_self, goals_opponent, winner)
+                winner is None in group stage if the match ends in a draw.
+        """
+        
+        # -------------------------
+        # 1) Regular 90 minutes
+        # -------------------------
+        lambda_self = (self.attack / 100) * 1.5 + (1 - opponent.defense / 100) * 0.8
+        lambda_opponent = (opponent.attack / 100) * 1.5 + (1 - self.defense / 100) * 0.8
 
-    goals_self = int(np.random.poisson(lam=lambda_self))
-    goals_opponent = int(np.random.poisson(lam=lambda_opponent))
+        goals_self = int(np.random.poisson(lam=lambda_self))
+        goals_opponent = int(np.random.poisson(lam=lambda_opponent))
 
-    # -------------------------
-    # 2) Group stage
-    # -------------------------
-    if not is_knockout:
+        # -------------------------
+        # 2) Group stage
+        # -------------------------
+        if not is_knockout:
+            self.goals_for += goals_self
+            self.goals_against += goals_opponent
+            opponent.goals_for += goals_opponent
+            opponent.goals_against += goals_self
+
+            if goals_self > goals_opponent:
+                self.points += 3
+                winner = self
+            elif goals_opponent > goals_self:
+                opponent.points += 3
+                winner = opponent
+            else:
+                self.points += 1
+                opponent.points += 1
+                winner = None
+
+            return goals_self, goals_opponent, winner
+
+        # -------------------------
+        # 3) Knockout stage
+        # -------------------------
+        if goals_self == goals_opponent:
+            extra_lambda_self = lambda_self * 0.33
+            extra_lambda_opponent = lambda_opponent * 0.33
+
+            extra_goals_self = int(np.random.poisson(lam=extra_lambda_self))
+            extra_goals_opponent = int(np.random.poisson(lam=extra_lambda_opponent))
+
+            goals_self += extra_goals_self
+            goals_opponent += extra_goals_opponent
+
+        # Update stats with only regular + extra time goals
         self.goals_for += goals_self
         self.goals_against += goals_opponent
         opponent.goals_for += goals_opponent
         opponent.goals_against += goals_self
 
-        if goals_self > goals_opponent:
-            self.points += 3
-            winner = self
-        elif goals_opponent > goals_self:
-            opponent.points += 3
-            winner = opponent
-        else:
-            self.points += 1
-            opponent.points += 1
-            winner = None
+        # If still tied after extra time, go to penalties
+        if goals_self == goals_opponent:
+            def penalty_success_prob(team, other_team):
+                p = 0.75 + (team.attack - other_team.defense) / 250
+                return max(0.6, min(0.9, p))
 
+            p_self = penalty_success_prob(self, opponent)
+            p_opponent = penalty_success_prob(opponent, self)
+
+            # 5 initial penalties each
+            self_penalties = 0
+            opponent_penalties = 0
+
+            for i in range(5):
+                if r.random() < p_self:
+                    self_penalties += 1
+                if r.random() < p_opponent:
+                    opponent_penalties += 1
+
+            # Sudden death if needed
+            while self_penalties == opponent_penalties:
+                if r.random() < p_self:
+                    self_penalties += 1
+                if r.random() < p_opponent:
+                    opponent_penalties += 1
+
+            winner = self if self_penalties > opponent_penalties else opponent
+            return goals_self, goals_opponent, winner
+
+        winner = self if goals_self > goals_opponent else opponent
         return goals_self, goals_opponent, winner
-
-    # -------------------------
-    # 3) Knockout stage
-    # -------------------------
-    if goals_self == goals_opponent:
-        extra_lambda_self = lambda_self * 0.33
-        extra_lambda_opponent = lambda_opponent * 0.33
-
-        extra_goals_self = int(np.random.poisson(lam=extra_lambda_self))
-        extra_goals_opponent = int(np.random.poisson(lam=extra_lambda_opponent))
-
-        goals_self += extra_goals_self
-        goals_opponent += extra_goals_opponent
-
-    # Update stats with only regular + extra time goals
-    self.goals_for += goals_self
-    self.goals_against += goals_opponent
-    opponent.goals_for += goals_opponent
-    opponent.goals_against += goals_self
-
-    # If still tied after extra time, go to penalties
-    if goals_self == goals_opponent:
-        def penalty_success_prob(team, other_team):
-            p = 0.75 + (team.attack - other_team.defense) / 250
-            return max(0.6, min(0.9, p))
-
-        p_self = penalty_success_prob(self, opponent)
-        p_opponent = penalty_success_prob(opponent, self)
-
-        # 5 initial penalties each
-        self_penalties = 0
-        opponent_penalties = 0
-
-        for i in range(5):
-            if r.random() < p_self:
-                self_penalties += 1
-            if r.random() < p_opponent:
-                opponent_penalties += 1
-
-        # Sudden death if needed
-        while self_penalties == opponent_penalties:
-            if r.random() < p_self:
-                self_penalties += 1
-            if r.random() < p_opponent:
-                opponent_penalties += 1
-
-        winner = self if self_penalties > opponent_penalties else opponent
-        return goals_self, goals_opponent, winner
-
-    winner = self if goals_self > goals_opponent else opponent
-    return goals_self, goals_opponent, winner
 
 
 class Match:
