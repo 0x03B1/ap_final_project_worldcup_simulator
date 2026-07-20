@@ -182,7 +182,8 @@ class Group:
     def advance_teams(self):
         """Return the top 2 teams in the group that advance to the knockout stage"""
         
-        pass
+        ranking = self.get_ranking()
+        return ranking[0], ranking[1]
 
 
 class KnockoutStage:
