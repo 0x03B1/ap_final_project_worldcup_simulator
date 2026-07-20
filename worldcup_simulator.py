@@ -190,7 +190,7 @@ class KnockoutStage:
     """class to represent the knockout stage of the World Cup"""
 
     def __init__(self, round_name, matches):
-        """Initialize a KnockoutStage object with a list of Team objects"""
+        """Initialize a KnockoutStage object with a round name and list of Match objects"""
 
         self.round_name = round_name
         self.matches = matches
@@ -198,7 +198,10 @@ class KnockoutStage:
     def play_round(self):
         """Simulate a round of matches in the knockout stage and update team statistics"""
 
-        pass
+        for match in self.matches:
+            match.play()
+
+        return self.get_winners()
 
     def get_winners(self):
         """Return the winners team of the knockout stage in the order they were played"""
