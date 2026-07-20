@@ -201,12 +201,16 @@ class KnockoutStage:
         for match in self.matches:
             match.play()
 
-        return self.get_winners()
-
     def get_winners(self):
         """Return the winners team of the knockout stage in the order they were played"""
 
-        pass
+        winners = []
+
+        for match in self.matches:
+            if match.winner is not None:
+                winners.append(match.winner)
+                
+        return winners
 
     def display_results(self):
         """Display the results of the knockout stage matches"""
