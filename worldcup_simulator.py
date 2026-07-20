@@ -147,7 +147,8 @@ class Match:
     def play(self):
         """Simulate the match and determine the winner"""
 
-        pass
+        self.goals1, self.goals2, self.winner = self.team1.simulate_match(self.team2, self.is_knockout)
+        return self.goals1, self.goals2, self.winner
 
 
 class Group:
