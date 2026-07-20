@@ -160,10 +160,16 @@ class Group:
         self.name = name
         self.teams = teams
 
+        for team in self.teams:
+            team.group = name
+
     def play_all_matches(self):
         """Simulate all matches in the group and update team statistics"""
 
-        pass
+        for i in range(len(self.teams)):
+            for j in range(i + 1, len(self.teams)):
+                match = Match(self.teams[i], self.teams[j], is_knockout=False)
+                match.play()
 
     def get_ranking(self):
         """Return the teams in the group sorted by points, goal difference, goals for, and randomly if necessary"""
