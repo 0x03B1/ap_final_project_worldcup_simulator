@@ -3,8 +3,8 @@
 #404130573
 
 import csv
-import random as r
 import math as m
+import random as r
 import numpy as np
 
 class Team:
@@ -209,13 +209,22 @@ class KnockoutStage:
         for match in self.matches:
             if match.winner is not None:
                 winners.append(match.winner)
-                
+
         return winners
 
     def display_results(self):
         """Display the results of the knockout stage matches"""
 
-        pass
+        print(f"===== {self.round_name} =====")
+
+        for match in self.matches:
+
+            print(
+                f"{match.team1.name} "
+                f"{match.goals1}-{match.goals2} "
+                f"{match.team2.name} "
+                f"Winner: {match.winner.name}"
+            )
 
 
 class WorldCupSimulator:
