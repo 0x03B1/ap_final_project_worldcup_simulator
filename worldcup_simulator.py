@@ -177,7 +177,7 @@ class Group:
         shuffled_teams = self.teams[:]
         r.shuffle(shuffled_teams)
 
-        return sorted(shuffled_teams, key=lambda team: (team.points, team.goal_difference, team.goals_for), reverse=True)
+        return sorted(shuffled_teams, key=lambda team: (team.points, team.goal_difference(), team.goals_for), reverse=True)
 
     def advance_teams(self):
         """Return the top 2 teams in the group that advance to the knockout stage"""
