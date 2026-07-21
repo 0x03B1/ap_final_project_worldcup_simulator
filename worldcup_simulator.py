@@ -275,7 +275,42 @@ class WorldCupSimulator:
     def seed_and_draw_groups(self):
         """Group draw based on seeding like fifa rankings"""
 
-        pass
+        seed1 = []
+        seed2 = []
+        seed3 = []
+        seed4 = []
+
+        # Divide teams into seeds based on rank
+        for team in self.teams:
+
+            if 1 <= team.rank <= 8:
+                seed1.append(team)
+
+            elif 9 <= team.rank <= 16:
+                seed2.append(team)
+
+            elif 17 <= team.rank <= 24:
+                seed3.append(team)
+
+            elif 25 <= team.rank <= 32:
+                seed4.append(team)
+
+        # Shuffle each seed to randomize the draw
+        r.shuffle(seed1)
+        r.shuffle(seed2)
+        r.shuffle(seed3)
+        r.shuffle(seed4)
+
+        # Create groups and assign teams from each seed
+        group_names = ["A", "B", "C", "D", "E", "F", "G", "H"]
+
+        #Create 8 groups, each with one team from each seed
+        for i in range(8):
+            group_teams = [seed1[i], seed2[i], seed3[i], seed4[i]]
+            group = Group(group_names[i], group_teams)
+            self.groups.append(group)
+
+        return True
 
     def run_group_stage(self):
         """Run the group stage of the World Cup and determine the teams that advance to the knockout stage"""
