@@ -244,7 +244,33 @@ class WorldCupSimulator:
     def load_teams_from_csv(self, filename):
         """Load teams from a CSV file and create Team objects"""
 
-        pass
+        try:
+            with open(filename, "r", encoding="utf-8") as file:
+                reader = csv.DictReader(file)
+
+                for row in reader:
+
+                    name = row["name"]
+                    attack = int(row["attack"])
+                    defense = int(row["defense"])
+                    rank = int(row["rank"])
+
+                    if type(name) is str and 0 <= attack <= 100 and 0 <= defense <= 100 and 1 <= rank <= 32:
+                        team = Team(name, attack, defense, rank)
+                        self.teams.append(team)
+                    else:
+                        print(f"Invalid data type or value for team: {row}")
+                        return False
+
+                if len(self.teams) != 32:
+                    print("Invalid count of teams: Expected 32 teams in the CSV file")
+                    return False
+
+            return True
+
+        except FileNotFoundError:
+            print("CSV file not found: Please check the file path and name")
+            return False
 
     def seed_and_draw_groups(self):
         """Group draw based on seeding like fifa rankings"""
