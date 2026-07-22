@@ -222,7 +222,7 @@ class KnockoutStage:
             print(
                 f"{match.team1.name} "
                 f"{match.goals1}-{match.goals2} "
-                f"{match.team2.name} "
+                f"{match.team2.name} | "
                 f"Winner: {match.winner.name}"
             )
 
@@ -363,7 +363,58 @@ class WorldCupSimulator:
     def run_knockout_stage(self):
         """Run the knockout stage of the World Cup and determine the champion"""
 
-        pass
+        #run the round of 16
+        self.round_of_16.play_round()
+        self.round_of_16.display_results()
+
+        winners = self.round_of_16.get_winners()
+
+        matches = [
+            Match(winners[0], winners[1], is_knockout = True),
+            Match(winners[2], winners[3], is_knockout = True),
+            Match(winners[4], winners[5], is_knockout = True),
+            Match(winners[6], winners[7], is_knockout = True)
+        ]
+
+        self.quarterfinals = KnockoutStage("Quarter Finals", matches)
+
+
+        #run the quarterfinals
+        self.quarterfinals.play_round()
+        self.quarterfinals.display_results()
+
+        winners = self.quarterfinals.get_winners()
+
+        matches = [
+            Match(winners[0], winners[1], is_knockout = True),
+            Match(winners[2], winners[3], is_knockout = True)
+        ]
+
+        self.semifinals = KnockoutStage("Semi Finals", matches)
+
+
+        #run the semifinals
+        self.semifinals.play_round()
+        self.semifinals.display_results()
+
+        winners = self.semifinals.get_winners()
+
+        matches = [
+            Match(winners[0], winners[1], is_knockout = True)
+        ]
+
+        self.final = KnockoutStage("Final", matches)
+
+
+        #run the final
+        self.final.play_round()
+        self.final.display_results()
+
+        winners = self.final.get_winners()
+
+        self.champion = winners[0]
+
+        return True
 
     def run_full_simulation(self):
         """Run the full World Cup simulation, including group stage and knockout stage and determine the champion"""
