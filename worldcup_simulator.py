@@ -336,7 +336,29 @@ class WorldCupSimulator:
     def setup_knockout_bracket(self):
         """Set up the knockout stage bracket based on the teams that advanced from the group stage"""
 
-        pass
+        A1, A2 = self.groups[0].advance_teams()
+        B1, B2 = self.groups[1].advance_teams()
+        C1, C2 = self.groups[2].advance_teams()
+        D1, D2 = self.groups[3].advance_teams()
+        E1, E2 = self.groups[4].advance_teams()
+        F1, F2 = self.groups[5].advance_teams()
+        G1, G2 = self.groups[6].advance_teams()
+        H1, H2 = self.groups[7].advance_teams()
+
+        Matches = [
+            Match(A1, B2, is_knockout=True),
+            Match(C1, D2, is_knockout=True),
+            Match(E1, F2, is_knockout=True),
+            Match(G1, H2, is_knockout=True),
+            Match(B1, A2, is_knockout=True),
+            Match(D1, C2, is_knockout=True),
+            Match(F1, E2, is_knockout=True),
+            Match(H1, G2, is_knockout=True)
+        ]
+
+        self.round_of_16 = KnockoutStage("Round of 16", Matches)
+
+        return True
 
     def run_knockout_stage(self):
         """Run the knockout stage of the World Cup and determine the champion"""
