@@ -315,7 +315,23 @@ class WorldCupSimulator:
     def run_group_stage(self):
         """Run the group stage of the World Cup and determine the teams that advance to the knockout stage"""
 
-        pass
+        for group in self.groups:
+
+            group.play_all_matches()
+            ranking = group.get_ranking()
+
+            print(f"===== Group {group.name} =====")
+
+            rank = 1
+            for team in ranking:
+                print(
+                    f"{rank}. {team.name} - Points: {team.points}, "
+                    f"Goal Difference: {team.goal_difference()}, "
+                    f"Goals For: {team.goals_for}"
+                )
+                rank += 1
+
+        return True
 
     def setup_knockout_bracket(self):
         """Set up the knockout stage bracket based on the teams that advanced from the group stage"""
