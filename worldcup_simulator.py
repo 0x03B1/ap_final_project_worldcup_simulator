@@ -378,7 +378,6 @@ class WorldCupSimulator:
 
         self.quarterfinals = KnockoutStage("Quarter Finals", matches)
 
-
         #run the quarterfinals
         self.quarterfinals.play_round()
         self.quarterfinals.display_results()
@@ -392,7 +391,6 @@ class WorldCupSimulator:
 
         self.semifinals = KnockoutStage("Semi Finals", matches)
 
-
         #run the semifinals
         self.semifinals.play_round()
         self.semifinals.display_results()
@@ -404,7 +402,6 @@ class WorldCupSimulator:
         ]
 
         self.final = KnockoutStage("Final", matches)
-
 
         #run the final
         self.final.play_round()
@@ -419,7 +416,15 @@ class WorldCupSimulator:
     def run_full_simulation(self):
         """Run the full World Cup simulation, including group stage and knockout stage and determine the champion"""
 
-        pass
+        for team in self.teams:
+            team.reset_stats()
+
+        self.seed_and_draw_groups()
+        self.run_group_stage()
+        self.setup_knockout_bracket()
+        self.run_knockout_stage()
+
+        return self.champion
 
     def most_likely_champion(self, num_simulations=1000):
         """Run multiple simulations of the World Cup and determine the most likely champion"""
