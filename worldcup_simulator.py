@@ -453,4 +453,17 @@ class WorldCupSimulator:
     def display_bracket(self):
         """Display the knockout stage bracket and results"""
 
-        pass
+        if self.round_of_16 is None:
+            print("No simulation has been run yet: Please run a full simulation first")
+            return False
+
+        print("===== Knockout Bracket =====")
+
+        self.round_of_16.display_results()
+        self.quarterfinals.display_results()
+        self.semifinals.display_results()
+        self.final.display_results()
+
+        print(f"Champion: {self.champion.name}")
+
+        return True
