@@ -274,6 +274,8 @@ class WorldCupSimulator:
     def seed_and_draw_groups(self):
         """Group draw based on seeding like fifa rankings"""
 
+        self.groups = []
+
         seed1 = []
         seed2 = []
         seed3 = []
