@@ -3,7 +3,6 @@
 #404130573
 
 import csv
-import math as m
 import random as r
 import numpy as np
 
@@ -429,7 +428,25 @@ class WorldCupSimulator:
     def most_likely_champion(self, num_simulations=1000):
         """Run multiple simulations of the World Cup and determine the most likely champion"""
 
-        pass
+        if num_simulations <= 0 or type(num_simulations) is not int:
+            print("Number of simulations is invalid: Please provide a positive integer")
+            return False
+
+        champion_counts = {}
+
+        for team in self.teams:
+            champion_counts[team.name] = 0
+
+        for _ in range(num_simulations):
+            champion = self.run_full_simulation()
+            champion_counts[champion.name] += 1
+
+        champion_percentages = {}
+
+        for team_name, count in champion_counts.items():
+            champion_percentages[team_name] = (count / num_simulations) * 100
+
+        return champion_percentages
 
     def display_bracket(self):
         """Display the knockout stage bracket and results"""
