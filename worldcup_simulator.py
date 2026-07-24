@@ -1,6 +1,9 @@
-#worldcup_simulator.py
-#Ali Ji-Afram
-#404130573
+# ======================================================
+#Student: Ali Ji-Afram
+#Student ID: 404130573
+#Project Title: AP-FP.WorldCup_Simulator
+#Submission Date: Sunday: July 26, 2026 / Mordad 4, 1405
+# ======================================================
 
 import csv
 import random as r
