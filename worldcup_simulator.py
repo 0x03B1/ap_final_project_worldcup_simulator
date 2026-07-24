@@ -271,6 +271,8 @@ class WorldCupSimulator:
                         print("Invalid count of teams: Expected 32 teams in the CSV file")
                     return False
 
+            if display:
+                print(f"Successfully loaded {len(self.teams)} teams from {filename}")
             return True
 
         except FileNotFoundError:
@@ -370,12 +372,14 @@ class WorldCupSimulator:
 
         return True
 
-    def run_knockout_stage(self):
+    def run_knockout_stage(self, display=True):
         """Run the knockout stage of the World Cup and determine the champion"""
 
         #run the round of 16
         self.round_of_16.play_round()
-        self.round_of_16.display_results()
+
+        if display:
+            self.round_of_16.display_results()
 
         winners = self.round_of_16.get_winners()
 
@@ -390,7 +394,9 @@ class WorldCupSimulator:
 
         #run the quarterfinals
         self.quarterfinals.play_round()
-        self.quarterfinals.display_results()
+
+        if display:
+            self.quarterfinals.display_results()
 
         winners = self.quarterfinals.get_winners()
 
@@ -403,7 +409,9 @@ class WorldCupSimulator:
 
         #run the semifinals
         self.semifinals.play_round()
-        self.semifinals.display_results()
+
+        if display:
+            self.semifinals.display_results()
 
         winners = self.semifinals.get_winners()
 
@@ -415,7 +423,9 @@ class WorldCupSimulator:
 
         #run the final
         self.final.play_round()
-        self.final.display_results()
+
+        if display:
+            self.final.display_results()
 
         winners = self.final.get_winners()
 
