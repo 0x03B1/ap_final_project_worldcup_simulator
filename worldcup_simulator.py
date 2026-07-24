@@ -211,19 +211,21 @@ class KnockoutStage:
 
         return winners
 
-    def display_results(self):
+    def display_results(self, display=True):
         """Display the results of the knockout stage matches"""
 
-        print(f"===== {self.round_name} =====")
+        if display:
 
-        for match in self.matches:
+            print(f"===== {self.round_name} =====")
 
-            print(
-                f"{match.team1.name} "
-                f"{match.goals1}-{match.goals2} "
-                f"{match.team2.name} | "
-                f"Winner: {match.winner.name}"
-            )
+            for match in self.matches:
+
+                print(
+                    f"{match.team1.name} "
+                    f"{match.goals1}-{match.goals2} "
+                    f"{match.team2.name} | "
+                    f"Winner: {match.winner.name}"
+                )
 
 
 class WorldCupSimulator:
@@ -240,8 +242,10 @@ class WorldCupSimulator:
         self.final = None
         self.champion = None
 
-    def load_teams_from_csv(self, filename):
+    def load_teams_from_csv(self, filename, display=True):
         """Load teams from a CSV file and create Team objects"""
+
+        self.teams = []
 
         try:
             with open(filename, "r", encoding="utf-8") as file:
@@ -258,17 +262,20 @@ class WorldCupSimulator:
                         team = Team(name, attack, defense, rank)
                         self.teams.append(team)
                     else:
-                        print(f"Invalid data type or value for team: {row}")
+                        if display:
+                            print(f"Invalid data type or value for team: {row}")
                         return False
 
                 if len(self.teams) != 32:
-                    print("Invalid count of teams: Expected 32 teams in the CSV file")
+                    if display:
+                        print("Invalid count of teams: Expected 32 teams in the CSV file")
                     return False
 
             return True
 
         except FileNotFoundError:
-            print("CSV file not found: Please check the file path and name")
+            if display:
+                print("CSV file not found: Please check the file path and name")
             return False
 
     def seed_and_draw_groups(self):
@@ -313,7 +320,7 @@ class WorldCupSimulator:
 
         return True
 
-    def run_group_stage(self):
+    def run_group_stage(self, display=True):
         """Run the group stage of the World Cup and determine the teams that advance to the knockout stage"""
 
         for group in self.groups:
@@ -321,16 +328,18 @@ class WorldCupSimulator:
             group.play_all_matches()
             ranking = group.get_ranking()
 
-            print(f"===== Group {group.name} =====")
+            if display:
 
-            rank = 1
-            for team in ranking:
-                print(
-                    f"{rank}. {team.name} - Points: {team.points}, "
-                    f"Goal Difference: {team.goal_difference()}, "
-                    f"Goals For: {team.goals_for}"
-                )
-                rank += 1
+                print(f"===== Group {group.name} =====")
+
+                rank = 1
+                for team in ranking:
+                    print(
+                        f"{rank}. {team.name} - Points: {team.points}, "
+                        f"Goal Difference: {team.goal_difference()}, "
+                        f"Goals For: {team.goals_for}"
+                    )
+                    rank += 1
 
         return True
 
@@ -427,11 +436,12 @@ class WorldCupSimulator:
 
         return self.champion
 
-    def most_likely_champion(self, num_simulations=1000):
+    def most_likely_champion(self, num_simulations=1000, display=True):
         """Run multiple simulations of the World Cup and determine the most likely champion"""
 
         if num_simulations <= 0 or type(num_simulations) is not int:
-            print("Number of simulations is invalid: Please provide a positive integer")
+            if display:
+                print("Number of simulations is invalid: Please provide a positive integer")
             return False
 
         champion_counts = {}
@@ -450,20 +460,23 @@ class WorldCupSimulator:
 
         return champion_percentages
 
-    def display_bracket(self):
+    def display_bracket(self, display=True):
         """Display the knockout stage bracket and results"""
 
         if self.round_of_16 is None:
-            print("No simulation has been run yet: Please run a full simulation first")
+            if display:
+                print("No simulation has been run yet: Please run a full simulation first")
             return False
 
-        print("===== Knockout Bracket =====")
+        if display:
+            
+            print("===== Knockout Bracket =====")
 
-        self.round_of_16.display_results()
-        self.quarterfinals.display_results()
-        self.semifinals.display_results()
-        self.final.display_results()
+            self.round_of_16.display_results()
+            self.quarterfinals.display_results()
+            self.semifinals.display_results()
+            self.final.display_results()
 
-        print(f"Champion: {self.champion.name}")
+            print(f"Champion: {self.champion.name}")
 
         return True
