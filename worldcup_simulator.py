@@ -436,16 +436,16 @@ class WorldCupSimulator:
 
         return True
 
-    def run_full_simulation(self):
+    def run_full_simulation(self, display=True):
         """Run the full World Cup simulation, including group stage and knockout stage and determine the champion"""
 
         for team in self.teams:
             team.reset_stats()
 
         self.seed_and_draw_groups()
-        self.run_group_stage()
+        self.run_group_stage(display)
         self.setup_knockout_bracket()
-        self.run_knockout_stage()
+        self.run_knockout_stage(display)
 
         return self.champion
 
@@ -463,7 +463,7 @@ class WorldCupSimulator:
             champion_counts[team.name] = 0
 
         for _ in range(num_simulations):
-            champion = self.run_full_simulation()
+            champion = self.run_full_simulation(display)
             champion_counts[champion.name] += 1
 
         champion_percentages = {}
